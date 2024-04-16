@@ -1,0 +1,55 @@
+spring:
+  profiles:
+    active: dev
+
+---
+server:
+  port: 8081
+spring:
+  rabbitmq:
+    host: 192.168.126.128
+    port: 5672
+    virtual-host: /
+    username: itheima
+    password: 123321
+    connection-timeout: 1s
+    template:
+      retry:
+        enabled: true
+        multiplier: 2
+    listener:
+      simple:
+        prefetch: 1
+        acknowledge-mode: auto
+        retry:
+          enabled: true
+          initial-interval: 1000ms
+          multiplier: 1
+          max-attempts: 3
+          stateless: true
+  application:
+    name: todolist
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/netty?useSSL=false&serverTimezone=UTC
+    username: root
+    password: Yusiheng666666
+    type: com.alibaba.druid.pool.DruidDataSource
+
+  jackson:
+    default-property-inclusion: non_null # JSON?????????
+    time-zone: GMT+8
+    date-format: yyyy.M.d HH:mm:ss
+  config:
+    activate:
+      on-profile: dev
+logging:
+  level:
+    com.huayu: debug
+jasypt:
+  encryptor:
+    password: huayu
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+
+
